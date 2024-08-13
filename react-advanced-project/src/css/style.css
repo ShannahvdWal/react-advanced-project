@@ -1,0 +1,14 @@
+.add-event,
+.event-list {
+  padding: 2em;
+}
+
+.event-list li,
+nav li {
+  list-style: none;
+}
+
+.heading-large {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

@@ -12,9 +12,9 @@ import { Form } from "react-router-dom";
 export const AddEventPage = () => {
   return (
     <div className="add-event">
-      <Heading paddingTop={10}>Add New Event</Heading>
+      <Heading className="heading-large">Add New Event</Heading>
       <Form>
-        <Stack spacing={4} paddingTop={30}>
+        <Stack spacing={4} maxW={600}>
           <InputGroup>
             <InputLeftAddon w={125}>
               <b>Title</b>
@@ -28,20 +28,31 @@ export const AddEventPage = () => {
             <Input placeholder="brief event description" />
           </InputGroup>
           <InputGroup size="sm">
-            <InputLeftAddon w={125}>Image</InputLeftAddon>
+            <InputLeftAddon w={125}>
+              <b>Image</b>
+            </InputLeftAddon>
             <Input type="tel" placeholder="https://" />
           </InputGroup>
           <InputGroup size="sm">
-            <InputLeftAddon w={125}>Event Start</InputLeftAddon>
-            <Input type="datetime-local"></Input>
+            <InputLeftAddon w={125}>
+              <b>Event Start</b>
+            </InputLeftAddon>
+            <Input
+              htmlSize={4}
+              width="auto"
+              type="datetime-local"
+              marginRight={10}
+            ></Input>
+            <InputLeftAddon w={125}>
+              <b>Event End</b>
+            </InputLeftAddon>
+            <Input htmlSize={4} width="auto" type="datetime-local"></Input>
           </InputGroup>
           <InputGroup size="sm">
-            <InputLeftAddon w={125}>Event End</InputLeftAddon>
-            <Input type="datetime-local"></Input>
-          </InputGroup>
-          <InputGroup size="sm">
-            <InputLeftAddon w={125}>Creator</InputLeftAddon>
-            <Input placeholder="User Name" />
+            <InputLeftAddon w={125}>
+              <b>Creator</b>
+            </InputLeftAddon>
+            <Input placeholder="user name" />
           </InputGroup>
         </Stack>
         <Button marginTop={30}>Add event</Button>

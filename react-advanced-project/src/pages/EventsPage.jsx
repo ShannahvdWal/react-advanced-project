@@ -1,6 +1,7 @@
 import React from "react";
 import { Heading, Card, CardBody, SimpleGrid } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
+import "../css/style.css";
 
 export const loader = async ({ params }) => {
   const events = await fetch("http://localhost:3000/events");
@@ -17,7 +18,7 @@ export const EventsPage = () => {
 
   return (
     <div className="event-list">
-      <Heading size="xl">List of events</Heading>
+      <Heading className="heading-large">List of events</Heading>
       <ul>
         <SimpleGrid
           spacing={4}
