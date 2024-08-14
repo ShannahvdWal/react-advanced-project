@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Heading,
@@ -10,28 +10,61 @@ import {
 import { Form } from "react-router-dom";
 
 export const AddEventPage = () => {
+  const [events, setEvents] = useState([]);
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
+
+  const createEvent = async (event) => {
+    // No error handling, normally you would do that.
+    const response = await fetch("http://localhost:3000/events", {
+      method: "POST",
+      body: JSON.stringify(event),
+      headers: { "Content-Type": "application/json;charset=utf-8" },
+    });
+    event.id = (await response.json()).id;
+    setEvents(events.concat(event));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    createEvent({ title });
+
+    // Empty the form fields.
+    setTitle("");
+    // setEmail("");
+    // setWebsite("");
+  };
+
   return (
     <div className="add-event">
       <Heading className="heading-large">Add New Event</Heading>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         <Stack spacing={4} maxW={600}>
           <InputGroup>
             <InputLeftAddon w={125}>
               <b>Title</b>
             </InputLeftAddon>
-            <Input placeholder="event name" />
+            <Input
+              placeholder="event name"
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+            />
           </InputGroup>
-          <InputGroup>
+          {/* <InputGroup>
             <InputLeftAddon w={125}>
               <b>Description</b>
             </InputLeftAddon>
-            <Input placeholder="brief event description" />
+            <Input placeholder="brief event description" value={description} />
           </InputGroup>
           <InputGroup size="sm">
             <InputLeftAddon w={125}>
               <b>Image</b>
             </InputLeftAddon>
-            <Input type="tel" placeholder="https://" />
+            <Input type="url" placeholder="https://" value={image} />
           </InputGroup>
           <InputGroup size="sm">
             <InputLeftAddon w={125}>
@@ -42,20 +75,28 @@ export const AddEventPage = () => {
               width="auto"
               type="datetime-local"
               marginRight={10}
+              value={startTime}
             ></Input>
             <InputLeftAddon w={125}>
               <b>Event End</b>
             </InputLeftAddon>
-            <Input htmlSize={4} width="auto" type="datetime-local"></Input>
-          </InputGroup>
-          <InputGroup size="sm">
+            <Input
+              htmlSize={4}
+              width="auto"
+              type="datetime-local"
+              value={endTime}
+            ></Input>
+          </InputGroup> */}
+          {/* <InputGroup size="sm">
             <InputLeftAddon w={125}>
               <b>Creator</b>
             </InputLeftAddon>
-            <Input placeholder="user name" />
-          </InputGroup>
+            <Input placeholder="user name" value={} />
+          </InputGroup> */}
         </Stack>
-        <Button marginTop={30}>Add event</Button>
+        <Button type="submit" marginTop={30}>
+          Add event
+        </Button>
       </Form>
     </div>
   );
