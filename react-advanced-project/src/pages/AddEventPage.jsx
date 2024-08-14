@@ -12,10 +12,10 @@ import { Form } from "react-router-dom";
 export const AddEventPage = () => {
   const [events, setEvents] = useState([]);
   const [title, setTitle] = useState();
-  const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [description, setDescription] = useState();
+  const [image, setImage] = useState();
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
 
   const createEvent = async (event) => {
     // No error handling, normally you would do that.
@@ -31,12 +31,14 @@ export const AddEventPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    createEvent({ title });
+    createEvent({ title, description, image, startTime, endTime });
 
     // Empty the form fields.
     setTitle("");
-    // setEmail("");
-    // setWebsite("");
+    setDescription("");
+    setImage("");
+    setStartTime("");
+    setEndTime("");
   };
 
   return (
@@ -54,17 +56,26 @@ export const AddEventPage = () => {
               value={title}
             />
           </InputGroup>
-          {/* <InputGroup>
+          <InputGroup>
             <InputLeftAddon w={125}>
               <b>Description</b>
             </InputLeftAddon>
-            <Input placeholder="brief event description" value={description} />
+            <Input
+              placeholder="brief event description"
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
+            />
           </InputGroup>
           <InputGroup size="sm">
             <InputLeftAddon w={125}>
               <b>Image</b>
             </InputLeftAddon>
-            <Input type="url" placeholder="https://" value={image} />
+            <Input
+              type="url"
+              placeholder="https://"
+              onChange={(e) => setImage(e.target.value)}
+              value={image}
+            />
           </InputGroup>
           <InputGroup size="sm">
             <InputLeftAddon w={125}>
@@ -75,6 +86,7 @@ export const AddEventPage = () => {
               width="auto"
               type="datetime-local"
               marginRight={10}
+              onChange={(e) => setStartTime(e.target.value)}
               value={startTime}
             ></Input>
             <InputLeftAddon w={125}>
@@ -84,9 +96,10 @@ export const AddEventPage = () => {
               htmlSize={4}
               width="auto"
               type="datetime-local"
+              onChange={(e) => setEndTime(e.target.value)}
               value={endTime}
             ></Input>
-          </InputGroup> */}
+          </InputGroup>
           {/* <InputGroup size="sm">
             <InputLeftAddon w={125}>
               <b>Creator</b>
