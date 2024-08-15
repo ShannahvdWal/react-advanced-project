@@ -20,7 +20,7 @@ export const loader = async ({ params }) => {
 
   return {
     events: await events.json(),
-    // users: await users.json(),
+    users: await users.json(),
     categories: await categories.json(),
   };
 };
@@ -70,7 +70,9 @@ export const EventsPage = () => {
                             event.categoryIds.includes(category.id)
                           )
                           .map((category) => (
-                            <Tag marginEnd={2} key={category.id}>{category.name}</Tag>
+                            <Tag marginEnd={2} key={category.id}>
+                              {category.name}
+                            </Tag>
                           ))}
                       </p>
                     </CardBody>

@@ -1,22 +1,39 @@
 import React, { useState } from "react";
 import {
   Button,
+  Checkbox,
+  CheckboxGroup,
   Heading,
+  HStack,
   Input,
   InputGroup,
   InputLeftAddon,
   Stack,
 } from "@chakra-ui/react";
-import { Form } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
+
+export const loader = async ({ params }) => {
+  const events = await fetch("http://localhost:3000/events");
+  const users = await fetch("http://localhost:3000/users");
+  const categories = await fetch("http://localhost:3000/categories");
+
+  return {
+    events: await events.json(),
+    users: await users.json(),
+    categories: await categories.json(),
+  };
+};
 
 export const AddEventPage = () => {
   const [events, setEvents] = useState([]);
-  const [category, setCategory] = useState([]);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
+  const [categoryIds, setCategoryIds] = useState([]);
+
+  const { categories } = useLoaderData();
 
   const createEvent = async (event) => {
     // No error handling, normally you would do that.
@@ -29,22 +46,10 @@ export const AddEventPage = () => {
     setEvents(events.concat(event));
   };
 
-  const createCategory = async (category) => {
-    // No error handling, normally you would do that.
-    const response = await fetch("http://localhost:3000/categories", {
-      method: "POST",
-      body: JSON.stringify(category),
-      headers: { "Content-Type": "application/json;charset=utf-8" },
-    });
-    category.id = (await response.json()).id;
-    setCategories(category.concat(category));
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    createEvent({ title, description, image, startTime, endTime });
-    createCategory({ category });
+    createEvent({ title, description, image, startTime, endTime, categoryIds });
 
     // Empty the form fields.
     setTitle("");
@@ -52,7 +57,7 @@ export const AddEventPage = () => {
     setImage("");
     setStartTime("");
     setEndTime("");
-    setCategory("");
+    setCategoryIds("");
   };
 
   return (
@@ -118,11 +123,23 @@ export const AddEventPage = () => {
             <InputLeftAddon w={125}>
               <b>Categories</b>
             </InputLeftAddon>
-            <Input
-              type="checkbox"
-              onChange={(e) => setCategories(e.target.value)}
-              value={category}
-            />
+            <Stack>
+              <CheckboxGroup>
+                <HStack>
+                  {categories.map((category) => {
+                    return (
+                      <Checkbox
+                        key={category.id}
+                        value={category.id.toString()}
+                        onChange={(e) => setCategoryIds(e.target.value)}
+                      >
+                        {category.name}
+                      </Checkbox>
+                    );
+                  })}
+                </HStack>
+              </CheckboxGroup>
+            </Stack>
           </InputGroup>
         </Stack>
         <Button type="submit" marginTop={30}>
