@@ -11,6 +11,7 @@ import { Form } from "react-router-dom";
 
 export const AddEventPage = () => {
   const [events, setEvents] = useState([]);
+  const [category, setCategory] = useState([]);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
@@ -28,10 +29,22 @@ export const AddEventPage = () => {
     setEvents(events.concat(event));
   };
 
+  const createCategory = async (category) => {
+    // No error handling, normally you would do that.
+    const response = await fetch("http://localhost:3000/categories", {
+      method: "POST",
+      body: JSON.stringify(category),
+      headers: { "Content-Type": "application/json;charset=utf-8" },
+    });
+    category.id = (await response.json()).id;
+    setCategories(category.concat(category));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     createEvent({ title, description, image, startTime, endTime });
+    createCategory({ category });
 
     // Empty the form fields.
     setTitle("");
@@ -39,6 +52,7 @@ export const AddEventPage = () => {
     setImage("");
     setStartTime("");
     setEndTime("");
+    setCategory("");
   };
 
   return (
@@ -100,12 +114,16 @@ export const AddEventPage = () => {
               value={endTime}
             ></Input>
           </InputGroup>
-          {/* <InputGroup size="sm">
+          <InputGroup size="sm">
             <InputLeftAddon w={125}>
-              <b>Creator</b>
+              <b>Categories</b>
             </InputLeftAddon>
-            <Input placeholder="user name" value={} />
-          </InputGroup> */}
+            <Input
+              type="checkbox"
+              onChange={(e) => setCategories(e.target.value)}
+              value={category}
+            />
+          </InputGroup>
         </Stack>
         <Button type="submit" marginTop={30}>
           Add event
