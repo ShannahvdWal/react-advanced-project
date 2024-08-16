@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   Button,
   Heading,
-  HStack,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -76,7 +75,7 @@ export const AddEventPage = () => {
     <div className="add-event">
       <Heading className="heading-large">Add New Event</Heading>
       <Form onSubmit={handleSubmit}>
-        <Stack spacing={4} maxW={600}>
+        <Stack spacing={4} maxW={650}>
           <InputGroup>
             <InputLeftAddon w={125}>
               <b>Title</b>
@@ -133,32 +132,15 @@ export const AddEventPage = () => {
           </InputGroup>
           <InputGroup size="sm">
             <InputLeftAddon w={125}>
-              <b>Categories</b>
+              <b>Categories*</b>
             </InputLeftAddon>
-            <Stack>
-              <select onChange={handleChange} multiple>
-                <option value={1}>apple</option>
-                <option value={2}>orange</option>
-                <option value={3}>grape</option>
-              </select>
-
-              {/* <CheckboxGroup>
-                <HStack>
-                  {categories.map((category) => {
-                    return (
-                      <Checkbox
-                        key={category.id}
-                        value={category.id.toString()}
-                        onChange={(e) => setCategoryIds(e.target.value)}
-                      >
-                        {category.name}
-                      </Checkbox>
-                    );
-                  })}
-                </HStack>
-              </CheckboxGroup> */}
-            </Stack>
+            <select placeholder="hold ctrl/ cmd to select multiple" onChange={handleChange} multiple>
+              <option value={1}>sports</option>
+              <option value={2}>games</option>
+              <option value={3}>relaxation</option>
+            </select>
           </InputGroup>
+          <div className="asterix"><i>*Hold CTRL/ CMD to select multiple categories</i> </div>
         </Stack>
         <Button type="submit" marginTop={30}>
           Add event
