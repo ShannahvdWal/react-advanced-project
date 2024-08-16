@@ -8,9 +8,10 @@ import {
   InputGroup,
   InputRightAddon,
   Tag,
+  Center,
 } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
-import { SearchIcon } from "@chakra-ui/icons";
+import { SearchIcon, ViewIcon } from "@chakra-ui/icons";
 import "../css/style.css";
 
 export const loader = async ({ params }) => {
@@ -44,7 +45,13 @@ export const EventsPage = () => {
           </InputRightAddon>
         </InputGroup>
       </Heading>
-
+      <Center>
+      {categories.map((category) => (
+        <Tag marginEnd={2} size='lg' key={category.id}>
+          {category.name}
+        </Tag>
+      ))}
+      </Center>
       <ul>
         <SimpleGrid
           spacing={4}
