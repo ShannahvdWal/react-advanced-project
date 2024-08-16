@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  Checkbox,
-  CheckboxGroup,
   Heading,
   HStack,
   Input,
@@ -49,7 +47,14 @@ export const AddEventPage = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    createEvent({ title, description, image, startTime, endTime, categoryIds });
+    createEvent({
+      title,
+      description,
+      image,
+      startTime,
+      endTime,
+      categoryIds,
+    });
 
     // Empty the form fields.
     setTitle("");
@@ -58,6 +63,13 @@ export const AddEventPage = () => {
     setStartTime("");
     setEndTime("");
     setCategoryIds("");
+  };
+
+  const handleChange = (e) => {
+    const categoryIds = [...e.target.selectedOptions].map(
+      (option) => +option.value
+    );
+    setCategoryIds(categoryIds);
   };
 
   return (
@@ -124,7 +136,13 @@ export const AddEventPage = () => {
               <b>Categories</b>
             </InputLeftAddon>
             <Stack>
-              <CheckboxGroup>
+              <select onChange={handleChange} multiple>
+                <option value={1}>apple</option>
+                <option value={2}>orange</option>
+                <option value={3}>grape</option>
+              </select>
+
+              {/* <CheckboxGroup>
                 <HStack>
                   {categories.map((category) => {
                     return (
@@ -138,7 +156,7 @@ export const AddEventPage = () => {
                     );
                   })}
                 </HStack>
-              </CheckboxGroup>
+              </CheckboxGroup> */}
             </Stack>
           </InputGroup>
         </Stack>
