@@ -17,7 +17,7 @@ export const loader = async ({ params }) => {
 export const EventPage = () => {
   const { event, categories, users } = useLoaderData();
   return (
-    <div>
+    <div className="event-page">
       <Card>
         <li key={event.id}>
           <CardBody>
@@ -37,11 +37,11 @@ export const EventPage = () => {
               <b>Created by:</b>
 
               {users
-                .filter((user) => event.categoryIds.includes(user.id))
+                .filter((user) => event.createdBy === user.id)
                 .map((user) => (
                   <li marginEnd={2} key={user.id}>
                     <img className="user-portrait" src={user.image}></img>
-                    {user.name} 
+                    {user.name}
                   </li>
                 ))}
             </p>

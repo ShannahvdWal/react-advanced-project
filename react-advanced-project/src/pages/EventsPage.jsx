@@ -6,11 +6,13 @@ import {
   InputRightAddon,
   Center,
   SimpleGrid,
-  Button,
+  Radio,
+  RadioGroup,
   Card,
   CardBody,
   Tag,
   Image,
+  Stack,
 } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
 import { SearchIcon } from "@chakra-ui/icons";
@@ -28,10 +30,20 @@ export const loader = async ({ params }) => {
   };
 };
 
-
 export const EventsPage = () => {
   const { events, categories } = useLoaderData();
-  const [query, setQuery] = useState(" ");
+  const [chosenCategory, setChosenCategory] = useState(0);
+  const [query, setQuery] = useState("");
+
+  const matchedEvents = events.filter(({ title }) =>
+    title.toLowerCase().includes(query.toLowerCase())
+  );
+
+  const filteredEvents = events.filter((event, { title }) =>
+    chosenCategory != 0
+      ? event.categoryIds.includes(Number(chosenCategory))
+      : events
+  );
 
   return (
     <div className="event-list">
@@ -49,18 +61,31 @@ export const EventsPage = () => {
         </InputGroup>
       </Heading>
       <Center>
-        <Image marginRight={5} width={5} src="src/Assets/filter-solid.svg" />
-        {categories.map((category) => (
-          <Button
-            // onClick={handleClick}
-            marginEnd={2}
-            size="md"
-            key={category.id}
-            value={category.id}
-          >
-            {category.name}
-          </Button>
-        ))}
+        <RadioGroup defaultValue="0" onChange={setChosenCategory}>
+          <Stack direction={{ base: "column", sm: "row" }} columnGap="10px">
+            <Image
+              marginRight={5}
+              width={5}
+              src="src/Assets/filter-solid.svg"
+            />
+
+            <Radio marginEnd={2} size="lg" value="0">
+              All
+            </Radio>
+
+            <Radio marginEnd={2} size="lg" value="1">
+              Sports
+            </Radio>
+
+            <Radio marginEnd={2} size="lg" value="2">
+              Games
+            </Radio>
+
+            <Radio marginEnd={2} size="lg" value="3">
+              Relaxation
+            </Radio>
+          </Stack>
+        </RadioGroup>
       </Center>
       <ul>
         <SimpleGrid
@@ -69,12 +94,14 @@ export const EventsPage = () => {
         >
           {events &&
             events
-              .filter((event) => {
-                return query.toLowerCase() === " "
-                  ? event
-                  : event.title.toLowerCase().includes(query);
-            })
-
+              .filter((event) =>
+                chosenCategory != 0
+                  ? event.categoryIds.includes(Number(chosenCategory))
+                  : events
+              )
+              .filter(({ title }) =>
+                title.toLowerCase().includes(query.toLowerCase())
+              )
               .map((event) => (
                 <Card maxW="sm">
                   <Link to={`/event/${event.id}`}>
