@@ -1,6 +1,12 @@
-import React from 'react';
-import { Heading } from '@chakra-ui/react';
+import React from "react";
+import { Heading } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 
 export const EventPage = () => {
-  return <Heading>Event</Heading>;
+  const { eventId } = useParams();
+  return (
+    <div>
+      <Heading>{eventId}</Heading>
+    </div>
+  );
 };
