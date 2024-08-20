@@ -1,10 +1,15 @@
+:root {
+  background-color: #cccc;
+}
+
 .add-event,
 .event-list {
   padding: 2em;
 }
 
 .event-list li,
-nav li, .event-page {
+nav li,
+.event-page {
   list-style: none;
 }
 
@@ -33,4 +38,25 @@ select {
 .user-portrait {
   width: 80px;
   border-radius: 50%;
+}
+
+.radio {
+  padding-bottom: 2.5em;
+}
+
+.event-times {
+  padding-top: 1.5em;
+}
+
+.event-edit-buttons {
+  padding-top: 1em;
+  align-items: end;
+}
+
+.edit {
+  margin-right: 1em;
+}
+
+.event-page-card {
+  margin: auto;
 }

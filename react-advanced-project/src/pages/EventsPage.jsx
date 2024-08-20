@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+uuidv4(); // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
 import {
   Heading,
   Input,
@@ -35,16 +37,6 @@ export const EventsPage = () => {
   const [chosenCategory, setChosenCategory] = useState(0);
   const [query, setQuery] = useState("");
 
-  const matchedEvents = events.filter(({ title }) =>
-    title.toLowerCase().includes(query.toLowerCase())
-  );
-
-  const filteredEvents = events.filter((event, { title }) =>
-    chosenCategory != 0
-      ? event.categoryIds.includes(Number(chosenCategory))
-      : events
-  );
-
   return (
     <div className="event-list">
       <Heading className="heading-large">
@@ -52,7 +44,6 @@ export const EventsPage = () => {
         <InputGroup>
           <Input
             onChange={(event) => setQuery(event.target.value)}
-            setQuery={setQuery}
             placeholder="Search for events..."
           ></Input>
           <InputRightAddon>
@@ -61,26 +52,26 @@ export const EventsPage = () => {
         </InputGroup>
       </Heading>
       <Center>
-        <RadioGroup defaultValue="0" onChange={setChosenCategory}>
+        <RadioGroup
+          className="radio"
+          defaultValue="0"
+          onChange={setChosenCategory}
+        >
           <Stack direction={{ base: "column", sm: "row" }} columnGap="10px">
             <Image
               marginRight={5}
               width={5}
               src="src/Assets/filter-solid.svg"
             />
-
             <Radio marginEnd={2} size="lg" value="0">
               All
             </Radio>
-
             <Radio marginEnd={2} size="lg" value="1">
               Sports
             </Radio>
-
             <Radio marginEnd={2} size="lg" value="2">
               Games
             </Radio>
-
             <Radio marginEnd={2} size="lg" value="3">
               Relaxation
             </Radio>
@@ -105,7 +96,7 @@ export const EventsPage = () => {
               .map((event) => (
                 <Card maxW="sm">
                   <Link to={`/event/${event.id}`}>
-                    <li key={event.id}>
+                    <li key={uuidv4()}>
                       <CardBody>
                         <Heading size="md">
                           <b>{event.title}</b>
@@ -126,7 +117,7 @@ export const EventsPage = () => {
                               event.categoryIds.includes(category.id)
                             )
                             .map((category) => (
-                              <Tag marginEnd={2} key={category.id}>
+                              <Tag marginEnd={2} key={uuidv4()}>
                                 {category.name}
                               </Tag>
                             ))}
