@@ -60,3 +60,14 @@ select {
 .event-page-card {
   margin: auto;
 }
+
+.input {
+  padding-left: 1em;
+  padding-right: 1em;
+  background: rgb(230, 230, 230);
+  width: 240px;
+}
+
+.titles {
+  line-height: 2em;
+}
