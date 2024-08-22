@@ -16,6 +16,7 @@ import {
   GridItem,
   IconButton,
   Input,
+  InputGroup,
   ButtonGroup,
 } from "@chakra-ui/react";
 import { Form } from "react-router-dom";
@@ -52,7 +53,7 @@ const EditEventModal = ({ isOpen, onClose, event, users }) => {
         <ModalCloseButton />
         <ModalBody>
           <Form>
-            <Grid templateColumns="1fr 4fr" gap={4}>
+            <Grid grid-auto-cols="1fr" templateColumns="1fr 4fr" gap={4}>
               <GridItem className="titles">
                 <p>
                   <b>Title:</b>
@@ -60,6 +61,10 @@ const EditEventModal = ({ isOpen, onClose, event, users }) => {
                 <p>
                   <b>Description:</b>
                 </p>
+                <p>
+                  <b>Image URL:</b>
+                </p>
+
               </GridItem>
               <GridItem>
                 <Editable defaultValue={event.title} isPreviewFocusable={false}>
@@ -96,18 +101,19 @@ const EditEventModal = ({ isOpen, onClose, event, users }) => {
                   <Input as={EditableInput} />
                   <EditableControls />
                 </Editable>
-                <Editable
-                  defaultValue={event.createdBy}
-                  isPreviewFocusable={false}
-                >
-                  <EditablePreview bg className="input" />
-                  <Input as={EditableInput} />
-                  <EditableControls />
-                </Editable>
-                <Editable defaultValue={users.image} isPreviewFocusable={false}>
-                  <EditablePreview bg className="input" />
-                  <Input as={EditableInput} />
-                  <EditableControls />
+                <div>
+                    <input type="checkbox" id="sports" value={1}>
+                    <label for="sports">sports</label>
+                    <input type="checkbox" id ="games" value={2}>
+                    <label for="sports">games</label>
+                    <input type="checkbox" id="relaxation" value={3}>
+                    <label for="relaxation">relaxation</label>
+                </div>
+                <Editable>
+                  <select defaultValue={event.createdBy} multiple>
+                    <option value={"1"}>Ignacio Doe</option>
+                    <option value={"2"}>Jane Bennett</option>
+                  </select>
                 </Editable>
               </GridItem>
             </Grid>
