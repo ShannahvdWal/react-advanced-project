@@ -63,7 +63,6 @@ export const EventPage = () => {
               <GridItem>
                 <p>
                   <b>Created by:</b>
-
                   {users
                     .filter((user) => event.createdBy === user.id)
                     .map((user) => (
@@ -81,6 +80,7 @@ export const EventPage = () => {
                     isOpen={isOpen}
                     onClose={onClose}
                     event={event}
+                    users={users}
                   />
                 </Button>
                 <Button className="delete" colorScheme="red">

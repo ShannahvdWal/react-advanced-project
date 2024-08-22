@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { Form } from "react-router-dom";
 
-const EditEventModal = ({ isOpen, onClose, event }) => {
+const EditEventModal = ({ isOpen, onClose, event, users }) => {
   function EditableControls() {
     const {
       isEditing,
@@ -75,15 +75,15 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   <Input as={EditableInput} />
                   <EditableControls />
                 </Editable>
-                <Editable
-                  defaultValue={event.startTime}
-                  isPreviewFocusable={false}
-                >
+                <Editable defaultValue={event.image} isPreviewFocusable={false}>
                   <EditablePreview bg className="input" />
                   <Input as={EditableInput} />
                   <EditableControls />
                 </Editable>
-                <Editable defaultValue={event.image} isPreviewFocusable={false}>
+                <Editable
+                  defaultValue={event.startTime}
+                  isPreviewFocusable={false}
+                >
                   <EditablePreview bg className="input" />
                   <Input as={EditableInput} />
                   <EditableControls />
@@ -104,7 +104,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   <Input as={EditableInput} />
                   <EditableControls />
                 </Editable>
-                <Editable defaultValue={user.image} isPreviewFocusable={false}>
+                <Editable defaultValue={users.image} isPreviewFocusable={false}>
                   <EditablePreview bg className="input" />
                   <Input as={EditableInput} />
                   <EditableControls />
