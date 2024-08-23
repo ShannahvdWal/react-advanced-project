@@ -34,7 +34,7 @@ export const EventPage = () => {
     const response = await fetch(`http://localhost:3000/events/${event.id}`, {
       method: "DELETE",
     });
-    useNavigate("/");
+    // useNavigate("/");
   };
 
   return (

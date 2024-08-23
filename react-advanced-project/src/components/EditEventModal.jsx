@@ -31,29 +31,29 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const updateEvent = async (event) => {
+    // No error handling, normally you would do that.
+    const response = await fetch(`http://localhost:3000/events/${event.id}`, {
+      method: "PUT",
+      body: JSON.stringify(title),
+      headers: { "Content-Type": "application/json" },
+    });
+    event.id = (await response.json()).id;
+    // setEvents(event.id(event));
+    // event.id = (await response.json()).id;
+    // useNavigate(`/events/${id}`)
+  };
 
-    const updateEventData = {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    updateEvent({
       title,
       description,
       image,
       startTime,
       endTime,
-    };
-  
-    const updateEvent = async (event, events) => {
-      // No error handling, normally you would do that.
-      const response = await fetch(`http://localhost:3000/events/${event.id}`, {
-        method: "PUT",
-        body: JSON.stringify(updateEventData),
-        headers: { "Content-Type": "application/json" },
-      });
-      return response.json();
-      setEvents(events.concat(event));
-      // event.id = (await response.json()).id;
-      // useNavigate(`/events/${id}`)
-    };
+    });
   };
 
 
