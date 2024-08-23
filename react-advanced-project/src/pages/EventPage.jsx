@@ -13,8 +13,6 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import EditEventModal from "../components/EditEventModal";
 
-
-
 export const loader = async ({ params }) => {
   const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
   const categories = await fetch("http://localhost:3000/categories");

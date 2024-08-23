@@ -19,15 +19,7 @@ import {
   ButtonGroup,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { Form } from "react-router-dom";
-
-export const loader = async ({ params }) => {
-  const events = await fetch("http://localhost:3000/events");
-
-  return {
-    events: await events.json(),
-  };
-};
+import { Form, useNavigate } from "react-router-dom";
 
 const EditEventModal = ({ isOpen, onClose, event }) => {
   const [events, setEvents] = useState([]);
@@ -39,38 +31,32 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState();
 
-  const updateEvent = async (event) => {
-    // No error handling, normally you would do that.
-    const response = await fetch(`http://localhost:3000/events/${params.eventId}`, {
-      method: "PATCH",
-      body: JSON.stringify(event),
-      headers: { "Content-Type": "application/json;" },
-    });
-    event.id = (await response.json()).id;
-    setEvents(events.id(event));
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    updateEvent({
+    const updateEventData = {
       title,
-      // description,
-      // image,
-      // startTime,
-      // endTime,
-      // categoryIds,
-      // createdBy, 
-    });
-
-    // Empty the form fields.
-        setTitle("");
-    // setDescription("");
-    // setImage("");
-    // setStartTime("");
-    // setEndTime("");
-    // setCategoryIds("");
+      description,
+      image,
+      startTime,
+      endTime,
+    };
+  
+    const updateEvent = async (event, events) => {
+      // No error handling, normally you would do that.
+      const response = await fetch(`http://localhost:3000/events/${event.id}`, {
+        method: "PUT",
+        body: JSON.stringify(updateEventData),
+        headers: { "Content-Type": "application/json" },
+      });
+      return response.json();
+      setEvents(events.concat(event));
+      // event.id = (await response.json()).id;
+      // useNavigate(`/events/${id}`)
+    };
   };
+
+
 
   function EditableControls() {
     const {
@@ -132,7 +118,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   <EditablePreview bg className="input" />
                   <Input
                   onChange={(e) => setTitle(e.target.value)}
-                  value={event.title}
+                  value={title}
                   as={EditableInput} />
                   <EditableControls />
                 </Editable>
@@ -141,12 +127,18 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   isPreviewFocusable={false}
                 >
                   <EditablePreview bg className="input" />
-                  <Input as={EditableInput} />
+                  <Input 
+                  onChange={(e) => setDescription(e.target.value)}
+                  value={description}
+                  as={EditableInput} />
                   <EditableControls />
                 </Editable>
                 <Editable defaultValue={event.image} isPreviewFocusable={false}>
                   <EditablePreview bg className="input" />
-                  <Input as={EditableInput} />
+                  <Input 
+                  onChange={(e) => setImage(e.target.value)}
+                  value={image}
+                  as={EditableInput} />
                   <EditableControls />
                 </Editable>
                 <Editable
@@ -154,7 +146,10 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   isPreviewFocusable={false}
                 >
                   <EditablePreview bg className="input" />
-                  <Input as={EditableInput} />
+                  <Input 
+                  onChange={(e) => setStartTime(e.target.value)}
+                  value={startTime}
+                  as={EditableInput} />
                   <EditableControls />
                 </Editable>
                 <Editable
@@ -162,7 +157,10 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   isPreviewFocusable={false}
                 >
                   <EditablePreview bg className="input" />
-                  <Input as={EditableInput} />
+                  <Input 
+                  onChange={(e) => setEndTime(e.target.value)}
+                  value={endTime}
+                  as={EditableInput} />
                   <EditableControls />
                 </Editable>
                 <div>
