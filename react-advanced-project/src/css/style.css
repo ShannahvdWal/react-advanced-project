@@ -68,6 +68,15 @@ select {
   width: 240px;
 }
 
+.checkbox {
+  padding-right: 0.5em;
+  margin-right: 0.5em;
+}
+
 /* .titles {
   line-height: 2em;
 } */
+
+.editable {
+  width: 800px;
+}

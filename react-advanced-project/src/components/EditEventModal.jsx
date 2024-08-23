@@ -46,14 +46,14 @@ const EditEventModal = ({ isOpen, onClose, event, users }) => {
     );
   }
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal size="xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Edit: {event.title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Form>
-            <Grid grid-auto-cols="1fr" templateColumns="1fr 4fr" gap={4}>
+            <Grid templateColumns="1fr 6fr" gap={4}>
               <GridItem className="titles">
                 <p>
                   <b>Title:</b>
@@ -64,9 +64,8 @@ const EditEventModal = ({ isOpen, onClose, event, users }) => {
                 <p>
                   <b>Image URL:</b>
                 </p>
-
               </GridItem>
-              <GridItem>
+              <GridItem classname="editable">
                 <Editable defaultValue={event.title} isPreviewFocusable={false}>
                   <EditablePreview bg className="input" />
                   <Input as={EditableInput} />
@@ -102,19 +101,52 @@ const EditEventModal = ({ isOpen, onClose, event, users }) => {
                   <EditableControls />
                 </Editable>
                 <div>
-                    <input type="checkbox" id="sports" value={1}>
-                    <label for="sports">sports</label>
-                    <input type="checkbox" id ="games" value={2}>
-                    <label for="sports">games</label>
-                    <input type="checkbox" id="relaxation" value={3}>
-                    <label for="relaxation">relaxation</label>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    id="sports"
+                    value={1}
+                  />
+                  <label className="checkbox" for="sports">
+                    sports
+                  </label>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    id="games"
+                    value={2}
+                  />
+                  <label className="checkbox" for="sports">
+                    games
+                  </label>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    id="relaxation"
+                    value={3}
+                  />
+                  <label for="relaxation">relaxation</label>
                 </div>
-                <Editable>
-                  <select defaultValue={event.createdBy} multiple>
-                    <option value={"1"}>Ignacio Doe</option>
-                    <option value={"2"}>Jane Bennett</option>
-                  </select>
-                </Editable>
+                <div>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    id="ignacio"
+                    value={1}
+                  />
+                  <label className="checkbox" for="ignacio">
+                    Ignacio Doe
+                  </label>
+                  <input
+                    className="checkbox"
+                    type="checkbox"
+                    id="jane"
+                    value={1}
+                  />
+                  <label className="checkbox" for="jane">
+                    Jane Bennett
+                  </label>
+                </div>
               </GridItem>
             </Grid>
           </Form>
