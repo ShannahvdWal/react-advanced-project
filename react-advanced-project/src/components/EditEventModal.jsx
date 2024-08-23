@@ -22,7 +22,7 @@ import { useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 
 const EditEventModal = ({ isOpen, onClose, event }) => {
-  const [events, setEvents] = useState([]);
+  // const [events, setEvents] = useState([]);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
@@ -31,15 +31,13 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState();
 
-  const updateEvent = async (event) => {
+  const updateEvent = async (e) => {
     // No error handling, normally you would do that.
     const response = await fetch(`http://localhost:3000/events/${event.id}`, {
       method: "PUT",
-      body: JSON.stringify(title),
+      body: JSON.stringify(e),
       headers: { "Content-Type": "application/json" },
     });
-    event.id = (await response.json()).id;
-    // setEvents(event.id(event));
     // event.id = (await response.json()).id;
     // useNavigate(`/events/${id}`)
   };
