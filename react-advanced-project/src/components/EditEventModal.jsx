@@ -16,12 +16,62 @@ import {
   GridItem,
   IconButton,
   Input,
-  InputGroup,
   ButtonGroup,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { Form } from "react-router-dom";
 
-const EditEventModal = ({ isOpen, onClose, event, users }) => {
+export const loader = async ({ params }) => {
+  const events = await fetch("http://localhost:3000/events");
+
+  return {
+    events: await events.json(),
+  };
+};
+
+const EditEventModal = ({ isOpen, onClose, event }) => {
+  const [events, setEvents] = useState([]);
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [image, setImage] = useState();
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
+  const [categoryIds, setCategoryIds] = useState([]);
+  const [createdBy, setCreatedBy] = useState();
+
+  const updateEvent = async (event) => {
+    // No error handling, normally you would do that.
+    const response = await fetch(`http://localhost:3000/events/${params.eventId}`, {
+      method: "PATCH",
+      body: JSON.stringify(event),
+      headers: { "Content-Type": "application/json;" },
+    });
+    event.id = (await response.json()).id;
+    setEvents(events.id(event));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    updateEvent({
+      title,
+      // description,
+      // image,
+      // startTime,
+      // endTime,
+      // categoryIds,
+      // createdBy, 
+    });
+
+    // Empty the form fields.
+        setTitle("");
+    // setDescription("");
+    // setImage("");
+    // setStartTime("");
+    // setEndTime("");
+    // setCategoryIds("");
+  };
+
   function EditableControls() {
     const {
       isEditing,
@@ -52,7 +102,7 @@ const EditEventModal = ({ isOpen, onClose, event, users }) => {
         <ModalHeader>Edit: {event.title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Grid templateColumns="1fr 6fr" gap={4}>
               <GridItem className="titles">
                 <p>
@@ -64,11 +114,26 @@ const EditEventModal = ({ isOpen, onClose, event, users }) => {
                 <p>
                   <b>Image URL:</b>
                 </p>
+                <p className="start-time">                  
+                  <b>Start Time:</b>
+                </p>
+                <p>                  
+                  <b>End Time:</b>
+                </p>
+                <p>                  
+                  <b>Categories:</b>
+                </p>
+                <p>                  
+                  <b>Author:</b>
+                </p>
               </GridItem>
               <GridItem classname="editable">
                 <Editable defaultValue={event.title} isPreviewFocusable={false}>
                   <EditablePreview bg className="input" />
-                  <Input as={EditableInput} />
+                  <Input
+                  onChange={(e) => setTitle(e.target.value)}
+                  value={event.title}
+                  as={EditableInput} />
                   <EditableControls />
                 </Editable>
                 <Editable
@@ -149,13 +214,14 @@ const EditEventModal = ({ isOpen, onClose, event, users }) => {
                 </div>
               </GridItem>
             </Grid>
+            <Button type="submit" colorScheme="blue" mr={3}>
+            Save changes
+            </Button>
           </Form>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3}>
-            Save changes
-          </Button>
+
         </ModalFooter>
       </ModalContent>
     </Modal>

@@ -9,9 +9,11 @@ import {
   Tag,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import EditEventModal from "../components/EditEventModal";
+
+
 
 export const loader = async ({ params }) => {
   const event = await fetch(`http://localhost:3000/events/${params.eventId}`);
@@ -28,6 +30,15 @@ export const loader = async ({ params }) => {
 export const EventPage = () => {
   const { event, categories, users } = useLoaderData();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const deleteEvent = async () => {
+    // No error handling, normally you would do that.
+    const response = await fetch(`http://localhost:3000/events/${event.id}`, {
+      method: "DELETE",
+    });
+    useNavigate("/");
+  };
+
   return (
     <div className="event-page">
       <Card className="event-page-card" maxW={750}>
@@ -83,7 +94,7 @@ export const EventPage = () => {
                     users={users}
                   />
                 </Button>
-                <Button className="delete" colorScheme="red">
+                <Button onClick={deleteEvent} className="delete" colorScheme="red">
                   <DeleteIcon />
                 </Button>
               </div>

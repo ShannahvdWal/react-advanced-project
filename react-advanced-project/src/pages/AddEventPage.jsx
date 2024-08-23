@@ -30,8 +30,6 @@ export const AddEventPage = () => {
   const [endTime, setEndTime] = useState();
   const [categoryIds, setCategoryIds] = useState([]);
 
-  const { categories } = useLoaderData();
-
   const createEvent = async (event) => {
     // No error handling, normally you would do that.
     const response = await fetch("http://localhost:3000/events", {
@@ -64,12 +62,6 @@ export const AddEventPage = () => {
     setCategoryIds("");
   };
 
-  const handleChange = (e) => {
-    const categoryIds = [...e.target.selectedOptions].map(
-      (option) => +option.value
-    );
-    setCategoryIds(categoryIds);
-  };
 
   return (
     <div className="add-event">
@@ -134,7 +126,7 @@ export const AddEventPage = () => {
             <InputLeftAddon w={125}>
               <b>Categories*</b>
             </InputLeftAddon>
-            <select placeholder="hold ctrl/ cmd to select multiple" onChange={handleChange} multiple>
+            <select placeholder="hold ctrl/ cmd to select multiple" multiple>
               <option value={1}>sports</option>
               <option value={2}>games</option>
               <option value={3}>relaxation</option>

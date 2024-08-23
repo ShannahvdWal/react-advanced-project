@@ -65,18 +65,19 @@ select {
   padding-left: 1em;
   padding-right: 1em;
   background: rgb(230, 230, 230);
-  width: 240px;
+  width: 65%;
 }
 
 .checkbox {
   padding-right: 0.5em;
   margin-right: 0.5em;
+  margin-top: 0.8em;
 }
 
-/* .titles {
-  line-height: 2em;
-} */
+.titles {
+  line-height: 2.1em;
+}
 
-.editable {
-  width: 800px;
+.start-time {
+  padding-top: 1.6em;
 }
