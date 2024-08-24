@@ -42,19 +42,33 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
     // useNavigate(`/events/${id}`)
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
     updateEvent({
       title,
       description,
       image,
       startTime,
       endTime,
+      categoryIds,
+      createdBy,
     });
   };
 
+  const handleChangeCategories = (e) => {
+    const categoryIds = [...e.target.selectedOptions].map(
+      (option) => +option.value
+    );
+    setCategoryIds(categoryIds);
+  };
 
+  const handleChangeAuthors = (e) => {
+    const createdBy = [...e.target.selectedOptions].map(
+      (option) => +option.value
+    );
+    setCreatedBy(createdBy);
+  };
 
   function EditableControls() {
     const {
@@ -112,12 +126,18 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                 </p>
               </GridItem>
               <GridItem classname="editable">
-                <Editable defaultValue={event.title} isPreviewFocusable={false}>
+                <Editable 
+                  defaultValue={event.title} 
+                  isPreviewFocusable={false}
+                >
                   <EditablePreview bg className="input" />
                   <Input
                   onChange={(e) => setTitle(e.target.value)}
+                  defaultValue={event.title} 
                   value={title}
-                  as={EditableInput} />
+                  id="title"
+                  as={EditableInput}
+                  />
                   <EditableControls />
                 </Editable>
                 <Editable
@@ -146,6 +166,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   <EditablePreview bg className="input" />
                   <Input 
                   onChange={(e) => setStartTime(e.target.value)}
+                  type="datetime-local"
                   value={startTime}
                   as={EditableInput} />
                   <EditableControls />
@@ -157,62 +178,31 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   <EditablePreview bg className="input" />
                   <Input 
                   onChange={(e) => setEndTime(e.target.value)}
+                  type="datetime-local"
                   value={endTime}
                   as={EditableInput} />
                   <EditableControls />
-                </Editable>
+                </Editable>     
+                <div>       
+                  <select onChange={handleChangeCategories} multiple>
+                    <option value={1}>sports</option>
+                    <option value={2}>games</option>
+                    <option value={3}>relaxation</option>
+                  </select>
+                </div> 
                 <div>
-                  <input
-                    className="checkbox"
-                    type="checkbox"
-                    id="sports"
-                    value={1}
-                  />
-                  <label className="checkbox" for="sports">
-                    sports
-                  </label>
-                  <input
-                    className="checkbox"
-                    type="checkbox"
-                    id="games"
-                    value={2}
-                  />
-                  <label className="checkbox" for="sports">
-                    games
-                  </label>
-                  <input
-                    className="checkbox"
-                    type="checkbox"
-                    id="relaxation"
-                    value={3}
-                  />
-                  <label for="relaxation">relaxation</label>
-                </div>
-                <div>
-                  <input
-                    className="checkbox"
-                    type="checkbox"
-                    id="ignacio"
-                    value={1}
-                  />
-                  <label className="checkbox" for="ignacio">
-                    Ignacio Doe
-                  </label>
-                  <input
-                    className="checkbox"
-                    type="checkbox"
-                    id="jane"
-                    value={1}
-                  />
-                  <label className="checkbox" for="jane">
-                    Jane Bennett
-                  </label>
-                </div>
+                  <select className="authors" onChange={handleChangeAuthors}>
+                    <option value={1}>Ignacio Doe</option>
+                    <option value={2}>Jane Bennett</option>
+                  </select>
+                </div> 
               </GridItem>
             </Grid>
-            <Button type="submit" colorScheme="blue" mr={3}>
-            Save changes
-            </Button>
+            <div className="submit-button">
+              <Button type="submit" colorScheme="blue" mr={3}>
+              Save changes
+              </Button>
+            </div>
           </Form>
         </ModalBody>
 

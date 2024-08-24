@@ -69,6 +69,13 @@ export const AddEventPage = () => {
     setCategoryIds(categoryIds);
   };
 
+  const handleChangeAuthors = (e) => {
+    const createdBy = [...e.target.selectedOptions].map(
+      (option) => +option.value
+    );
+    setCreatedBy(createdBy);
+  };
+
   return (
     <div className="add-event">
       <Heading className="heading-large">Add New Event</Heading>
@@ -128,6 +135,7 @@ export const AddEventPage = () => {
               value={endTime}
             ></Input>
           </InputGroup>
+          <div className="asterix"><i>*Hold CTRL/ CMD to select multiple categories</i> </div>
           <InputGroup size="sm">
             <InputLeftAddon w={125}>
               <b>Categories*</b>
@@ -138,7 +146,16 @@ export const AddEventPage = () => {
               <option value={3}>relaxation</option>
             </select>
           </InputGroup>
-          <div className="asterix"><i>*Hold CTRL/ CMD to select multiple categories</i> </div>
+          <InputGroup size="sm">
+            <InputLeftAddon w={125}>
+              <b>Author</b>
+            </InputLeftAddon>
+              <select className="authors" onChange={handleChangeAuthors}>
+                <option value={1}>Ignacio Doe</option>
+                <option value={2}>Jane Bennett</option>
+              </select>
+          </InputGroup>
+          
         </Stack>
         <Button type="submit" marginTop={30}>
           Add event
