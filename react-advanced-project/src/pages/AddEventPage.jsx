@@ -62,7 +62,7 @@ export const AddEventPage = () => {
     setCategoryIds("");
   };
 
-  const handleChange = (e) => {
+  const handleChangeCategories = (e) => {
     const categoryIds = [...e.target.selectedOptions].map(
       (option) => +option.value
     );
@@ -76,7 +76,7 @@ export const AddEventPage = () => {
     setCreatedBy(createdBy);
   };
 
-  return (
+  return ( 
     <div className="add-event">
       <Heading className="heading-large">Add New Event</Heading>
       <Form onSubmit={handleSubmit}>
@@ -140,7 +140,7 @@ export const AddEventPage = () => {
             <InputLeftAddon w={125}>
               <b>Categories*</b>
             </InputLeftAddon>
-            <select onChange={handleChange} multiple>
+            <select onChange={handleChangeCategories} multiple>
               <option value={1}>sports</option>
               <option value={2}>games</option>
               <option value={3}>relaxation</option>
