@@ -2,9 +2,17 @@
   background-color: #cccc;
 }
 
+.event-list, .event-page {
+  background-color: #f7f9fdcc;
+}
+
 .add-event,
 .event-list {
   padding: 2em;
+}
+
+.event-page {
+  padding: 3em;
 }
 
 .event-list li,
@@ -13,9 +21,23 @@ nav li,
   list-style: none;
 }
 
+.event-page-card {
+  margin-top: 3em;
+}
+
+.navigation {
+  background-color: #edf2f7;
+  padding: 1em;
+}
+
 .heading-large {
   margin-top: 1em;
   margin-bottom: 1em;
+  color: #3a3a3a;
+}
+
+.text {
+  color: #3a3a3a;
 }
 
 option {

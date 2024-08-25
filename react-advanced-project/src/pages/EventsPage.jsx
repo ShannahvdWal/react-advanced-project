@@ -41,8 +41,9 @@ export const EventsPage = () => {
     <div className="event-list">
       <Heading className="heading-large">
         Upcoming Events
-        <InputGroup>
-          <Input
+        <InputGroup marginTop={2}>
+          <Input 
+            bg="white"
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search for events..."
           ></Input>
@@ -97,7 +98,7 @@ export const EventsPage = () => {
                 <Card maxW="sm">
                   <Link to={`/event/${event.id}`}>
                     <li key={uuidv4()}>
-                      <CardBody>
+                      <CardBody className="text">
                         <Heading size="md">
                           <b>{event.title}</b>
                         </Heading>

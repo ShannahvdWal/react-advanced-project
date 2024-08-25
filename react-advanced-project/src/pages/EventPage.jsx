@@ -8,7 +8,6 @@ import {
   Heading,
   Tag,
   useDisclosure,
-  useToast,
 } from "@chakra-ui/react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
@@ -29,12 +28,11 @@ export const loader = async ({ params }) => {
 export const EventPage = () => {
   const { event, categories, users } = useLoaderData();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast;
   const navigate = useNavigate();
 
   const handleDeleteEvent = async (e) => {
     if (window.confirm("Do you really want to delete this event?")) {
-        const response = await fetch(`http://localhost:3000/events/${event.id}`, {
+        await fetch(`http://localhost:3000/events/${event.id}`, {
           method: "DELETE",
         });
         navigate(`/`);
@@ -43,9 +41,9 @@ export const EventPage = () => {
     
   return (
     <div className="event-page">
-      <Card className="event-page-card" maxW={750}>
+      <Card margin className="event-page-card" maxW={750}>
         <li key={event.id}>
-          <CardBody>
+          <CardBody className="text">
             <img src={event.image}></img>
             <Grid templateColumns="2fr 1fr" gap={4} padding={5}>
               <GridItem>
