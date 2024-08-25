@@ -29,6 +29,7 @@ export const AddEventPage = () => {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [categoryIds, setCategoryIds] = useState([]);
+  const [createdBy, setCreatedBy] = useState();
 
   const createEvent = async (event) => {
     // No error handling, normally you would do that.
@@ -51,6 +52,7 @@ export const AddEventPage = () => {
       startTime,
       endTime,
       categoryIds,
+      createdBy,
     });
 
     // Empty the form fields.
@@ -60,6 +62,7 @@ export const AddEventPage = () => {
     setStartTime("");
     setEndTime("");
     setCategoryIds("");
+    setCreatedBy("");
   };
 
   const handleChangeCategories = (e) => {
@@ -86,6 +89,9 @@ export const AddEventPage = () => {
               <b>Title</b>
             </InputLeftAddon>
             <Input
+              type="text"
+              minlength="3" 
+              maxlength="25"
               placeholder="event name"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
@@ -97,9 +103,13 @@ export const AddEventPage = () => {
               <b>Description</b>
             </InputLeftAddon>
             <Input
+              type="text"
+              minlength="8" 
+              maxlength="75"
               placeholder="brief event description"
               onChange={(e) => setDescription(e.target.value)}
               value={description}
+              required
             />
           </InputGroup>
           <InputGroup size="sm">
@@ -111,6 +121,7 @@ export const AddEventPage = () => {
               placeholder="https://"
               onChange={(e) => setImage(e.target.value)}
               value={image}
+              required
             />
           </InputGroup>
           <InputGroup size="sm">
@@ -124,6 +135,7 @@ export const AddEventPage = () => {
               marginRight={10}
               onChange={(e) => setStartTime(e.target.value)}
               value={startTime}
+              required
             ></Input>
             <InputLeftAddon w={125}>
               <b>Event End</b>
@@ -134,6 +146,7 @@ export const AddEventPage = () => {
               type="datetime-local"
               onChange={(e) => setEndTime(e.target.value)}
               value={endTime}
+              required
             ></Input>
           </InputGroup>
           <div className="asterix"><i>*Hold CTRL/ CMD to select multiple categories</i> </div>
@@ -141,7 +154,7 @@ export const AddEventPage = () => {
             <InputLeftAddon w={125}>
               <b>Categories*</b>
             </InputLeftAddon>
-            <select onChange={handleChangeCategories} multiple>
+            <select required onChange={handleChangeCategories} multiple>
               <option value={1}>sports</option>
               <option value={2}>games</option>
               <option value={3}>relaxation</option>

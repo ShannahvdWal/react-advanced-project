@@ -67,7 +67,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   };
 
   const handleChangeAuthors = (e) => {
-    const createdBy = [...e.target.selectedOptions].map(
+    const createdBy = [...e.target.selectedOptions].push(
       (option) => +option.value
     );
     setCreatedBy(createdBy);
@@ -87,7 +87,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
               <b>Title</b>
             </InputLeftAddon>
             <Input
-              placeholder="event name"
+              placeholder={event.title}
               onChange={(e) => setTitle(e.target.value)}
               value={title}
             />
@@ -97,7 +97,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
               <b>Description</b>
             </InputLeftAddon>
             <Input
-              placeholder="brief event description"
+              placeholder={event.description}
               onChange={(e) => setDescription(e.target.value)}
               value={description}
             />
@@ -108,7 +108,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
             </InputLeftAddon>
             <Input
               type="url"
-              placeholder="https://"
+              placeholder={event.image}
               onChange={(e) => setImage(e.target.value)}
               value={image}
             />
@@ -143,7 +143,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
             <InputLeftAddon w={125}>
               <b>Categories*</b>
             </InputLeftAddon>
-            <select onChange={handleChangeCategories} multiple>
+            <select required onChange={handleChangeCategories} multiple>
               <option value={1}>sports</option>
               <option value={2}>games</option>
               <option value={3}>relaxation</option>
