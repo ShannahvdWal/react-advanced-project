@@ -46,7 +46,7 @@ export const EventPage = () => {
 
   return (
     <div className="event-page">
-      <Card margin className="event-page-card" maxW={750}>
+      <Card margin className="event-page-card" maxW={625}>
         <li key={event.id}>
           <CardBody className="text">
             <CloseButton size="lg" onClick={exitEventPage} className="close" />

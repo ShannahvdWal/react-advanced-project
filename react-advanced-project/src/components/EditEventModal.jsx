@@ -22,7 +22,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [categoryIds, setCategoryIds] = useState([]);
-  const [createdBy, setCreatedBy] = useState([]);
+  const [createdBy, setCreatedBy] = useState();
   const toast = useToast();
   const navigate = useNavigate();
 
@@ -74,7 +74,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
         },
       });
       const id = (await updateEvent()).id;
-      onClose();
+      navigate("/");
     } catch (error) {
       console.error("Encountered error while editing event:", error);
     }
@@ -88,7 +88,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   };
 
   const handleChangeAuthors = (e) => {
-    const createdBy = [...e.target.selectedOptions].map(
+    const createdBy = [...e.target.selectedOptions].push(
       (option) => +option.value
     );
     setCreatedBy(createdBy);
