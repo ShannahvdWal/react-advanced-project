@@ -89,6 +89,7 @@ export const AddEventPage = () => {
               placeholder="event name"
               onChange={(e) => setTitle(e.target.value)}
               value={title}
+              required
             />
           </InputGroup>
           <InputGroup>

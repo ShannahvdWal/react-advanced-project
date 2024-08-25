@@ -37,7 +37,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   const updateEvent = async (e) => {
     // No error handling, normally you would do that.
     const response = await fetch(`http://localhost:3000/events/${event.id}`, {
-      method: "PUT",
+      method: "PATCH",
       body: JSON.stringify(e),
       headers: { "Content-Type": "application/json" },
     });

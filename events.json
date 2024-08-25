@@ -67,14 +67,11 @@
     },
     {
       "title": "Game night",
-      "description": "Play games with your friends",
+      "description": "LAN party",
       "image": "https://images.pexels.com/photos/7915283/pexels-photo-7915283.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       "startTime": "2024-08-24T17:55",
       "endTime": "2024-08-24T19:55",
-      "categoryIds": [
-        2,
-        3
-      ],
+      "categoryIds": [],
       "createdBy": [
         2
       ],
