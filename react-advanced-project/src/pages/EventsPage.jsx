@@ -42,7 +42,7 @@ export const EventsPage = () => {
       <Heading className="heading-large">
         Upcoming Events
         <InputGroup marginTop={2}>
-          <Input 
+          <Input
             bg="white"
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search for events..."

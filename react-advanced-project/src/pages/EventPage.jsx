@@ -3,6 +3,7 @@ import {
   Button,
   Card,
   CardBody,
+  CloseButton,
   Grid,
   GridItem,
   Heading,
@@ -32,19 +33,24 @@ export const EventPage = () => {
 
   const handleDeleteEvent = async (e) => {
     if (window.confirm("Do you really want to delete this event?")) {
-        await fetch(`http://localhost:3000/events/${event.id}`, {
-          method: "DELETE",
-        });
-        navigate(`/`);
-      }
-  }
-    
+      await fetch(`http://localhost:3000/events/${event.id}`, {
+        method: "DELETE",
+      });
+      navigate(`/`);
+    }
+  };
+
+  const exitEventPage = () => {
+    navigate("/");
+  };
+
   return (
     <div className="event-page">
       <Card margin className="event-page-card" maxW={750}>
         <li key={event.id}>
           <CardBody className="text">
-            <img src={event.image}></img>
+            <CloseButton size="lg" onClick={exitEventPage} className="close" />
+            <img className="event-image" src={event.image}></img>
             <Grid templateColumns="2fr 1fr" gap={4} padding={5}>
               <GridItem>
                 <Heading size="lg">
@@ -94,7 +100,11 @@ export const EventPage = () => {
                     users={users}
                   />
                 </Button>
-                <Button onClick={handleDeleteEvent} className="delete" colorScheme="red">
+                <Button
+                  onClick={handleDeleteEvent}
+                  className="delete"
+                  colorScheme="red"
+                >
                   <DeleteIcon />
                 </Button>
               </div>

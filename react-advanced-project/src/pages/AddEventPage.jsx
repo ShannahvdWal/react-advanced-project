@@ -30,10 +30,10 @@ export const AddEventPage = () => {
   const [endTime, setEndTime] = useState();
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState();
-  const toast = useToast()
+  const toast = useToast();
   const navigate = useNavigate();
 
-  const handleCreateEvent = async (e) => { 
+  const handleCreateEvent = async (e) => {
     e.preventDefault();
 
     const createEventData = {
@@ -45,7 +45,7 @@ export const AddEventPage = () => {
       categoryIds,
       createdBy,
     };
-      
+
     setTitle("");
     setDescription("");
     setImage("");
@@ -53,7 +53,7 @@ export const AddEventPage = () => {
     setEndTime("");
     setCategoryIds("");
     setCreatedBy("");
-    
+
     const createEvent = async () => {
       const response = await fetch("http://localhost:3000/events", {
         method: "POST",
@@ -64,34 +64,34 @@ export const AddEventPage = () => {
         throw new Error(`Failed to create event. Status: ${response.status}`);
       }
       return response.json();
-      };
-
-      try {
-        await toast.promise(createEvent(), {
-          loading: { title: "Creating event...", description: "Please wait" },
-          success: {
-            title: "Event created",
-            description: "Looks great",
-            isClosable: true,
-            duration: 4000,
-          },
-          error: {
-            title: "Failed to create event",
-            description: "Something went wrong",
-          },
-        });
-        navigate(`/`);
-      } catch (error) {
-        console.error("Encountered error while creating event:", error);
-      }
     };
 
-    const handleChangeCategories = (e) => {
-      const categoryIds = [...e.target.selectedOptions].map(
-        (option) => +option.value
-      );
-      setCategoryIds(categoryIds);
-    };
+    try {
+      await toast.promise(createEvent(), {
+        loading: { title: "Creating event...", description: "Please wait" },
+        success: {
+          title: "Event created",
+          description: "Looks great",
+          isClosable: true,
+          duration: 4000,
+        },
+        error: {
+          title: "Failed to create event",
+          description: "Something went wrong",
+        },
+      });
+      navigate(`/`);
+    } catch (error) {
+      console.error("Encountered error while creating event:", error);
+    }
+  };
+
+  const handleChangeCategories = (e) => {
+    const categoryIds = [...e.target.selectedOptions].map(
+      (option) => +option.value
+    );
+    setCategoryIds(categoryIds);
+  };
 
   const handleChangeAuthors = (e) => {
     const createdBy = [...e.target.selectedOptions].map(
@@ -99,9 +99,8 @@ export const AddEventPage = () => {
     );
     setCreatedBy(createdBy);
   };
-  
 
-  return ( 
+  return (
     <div className="add-event">
       <Heading className="heading-large">Add New Event</Heading>
       <Form onSubmit={handleCreateEvent}>
@@ -112,7 +111,7 @@ export const AddEventPage = () => {
             </InputLeftAddon>
             <Input
               type="text"
-              minlength="3" 
+              minlength="3"
               maxlength="25"
               placeholder="event name"
               onChange={(e) => setTitle(e.target.value)}
@@ -126,7 +125,7 @@ export const AddEventPage = () => {
             </InputLeftAddon>
             <Input
               type="text"
-              minlength="8" 
+              minlength="8"
               maxlength="75"
               placeholder="brief event description"
               onChange={(e) => setDescription(e.target.value)}
@@ -171,7 +170,9 @@ export const AddEventPage = () => {
               required
             ></Input>
           </InputGroup>
-          <div className="asterix"><i>*Hold CTRL/ CMD to select multiple categories</i> </div>
+          <div className="asterix">
+            <i>*Hold CTRL/ CMD to select multiple categories</i>{" "}
+          </div>
           <InputGroup size="sm">
             <InputLeftAddon w={125}>
               <b>Categories*</b>
@@ -186,13 +187,12 @@ export const AddEventPage = () => {
             <InputLeftAddon w={125}>
               <b>Author</b>
             </InputLeftAddon>
-              <select className="authors" onChange={handleChangeAuthors}>
-                <option>- select author -</option>
-                <option value={1}>Ignacio Doe</option>
-                <option value={2}>Jane Bennett</option>
-              </select>
+            <select className="authors" onChange={handleChangeAuthors}>
+              <option>- select author -</option>
+              <option value={1}>Ignacio Doe</option>
+              <option value={2}>Jane Bennett</option>
+            </select>
           </InputGroup>
-          
         </Stack>
         <Button colorScheme="blue" type="submit" marginTop={30}>
           Add event

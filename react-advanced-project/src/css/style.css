@@ -2,7 +2,8 @@
   background-color: #cccc;
 }
 
-.event-list, .event-page {
+.event-list,
+.event-page {
   background-color: #f7f9fdcc;
 }
 
@@ -101,4 +102,14 @@ select {
 
 .editable {
   width: 400px;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.event-image {
+  margin-top: 3em;
 }
