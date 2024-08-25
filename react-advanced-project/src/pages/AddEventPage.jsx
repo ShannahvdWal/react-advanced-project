@@ -8,9 +8,9 @@ import {
   Stack,
   useToast,
 } from "@chakra-ui/react";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 
-export const loader = async ({ params }) => {
+export const loader = async () => {
   const events = await fetch("http://localhost:3000/events");
   const users = await fetch("http://localhost:3000/users");
   const categories = await fetch("http://localhost:3000/categories");
@@ -31,6 +31,7 @@ export const AddEventPage = () => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState();
   const toast = useToast()
+  const navigate = useNavigate();
 
   const handleCreateEvent = async (e) => { 
     e.preventDefault();
@@ -45,7 +46,6 @@ export const AddEventPage = () => {
       createdBy,
     };
       
-    // Empty the form fields.
     setTitle("");
     setDescription("");
     setImage("");
@@ -80,8 +80,7 @@ export const AddEventPage = () => {
             description: "Something went wrong",
           },
         });
-        // (await createEvent()).id;
-        useNavigate(`/`);
+        navigate(`/`);
       } catch (error) {
         console.error("Encountered error while creating event:", error);
       }

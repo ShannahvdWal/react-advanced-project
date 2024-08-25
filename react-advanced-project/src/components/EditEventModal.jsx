@@ -1,4 +1,3 @@
-import { EditIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Button,
   Modal,
@@ -25,6 +24,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState([]);
   const toast = useToast()
+  const navigate = useNavigate();
 
   const handleUpdateEvent = async (e) => {
     e.preventDefault();
@@ -39,7 +39,6 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
       createdBy,
     };
 
-    // Empty the form fields.
     setTitle("");
     setDescription("");
     setImage("");
@@ -75,7 +74,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
           },
         });
         const id = (await updateEvent()).id;
-        useNavigate(`/event/${id}`);
+        onClose();
       } catch (error) {
         console.error("Encountered error while editing event:", error);
       }

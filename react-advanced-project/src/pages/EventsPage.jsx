@@ -20,7 +20,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import { SearchIcon } from "@chakra-ui/icons";
 import "../css/style.css";
 
-export const loader = async ({ params }) => {
+export const loader = async () => {
   const events = await fetch("http://localhost:3000/events");
   const users = await fetch("http://localhost:3000/users");
   const categories = await fetch("http://localhost:3000/categories");

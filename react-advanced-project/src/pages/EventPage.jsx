@@ -29,41 +29,18 @@ export const loader = async ({ params }) => {
 export const EventPage = () => {
   const { event, categories, users } = useLoaderData();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const toast = useToast();
+  const toast = useToast;
+  const navigate = useNavigate();
 
   const handleDeleteEvent = async (e) => {
-    const deleteEvent = async () => {
+    if (window.confirm("Do you really want to delete this event?")) {
         const response = await fetch(`http://localhost:3000/events/${event.id}`, {
           method: "DELETE",
         });
-        if (!response.ok) {
-          throw new Error(`Failed to edit event, status: ${response.status}`);
-        }
-        return response.json();
-        };
-
-        try {
-          await toast.promise(deleteEvent(), {
-            loading: { title: "Deleting...", description: "Please wait" },
-            success: {
-              title: "Event succesfully deleted",
-              description: "Event deleted",
-              isClosable: true,
-              duration: 4000,
-            },
-            error: {
-              title: "Failed to delete event",
-              description: "Something wrong",
-            },
-          });
-          const id = (await deleteEvent()).id;
-          useNavigate(`/event/${id}`);
-        } catch (error) {
-          console.error("Error during editing event:", error);
-        }
+        navigate(`/`);
+      }
   }
     
-
   return (
     <div className="event-page">
       <Card className="event-page-card" maxW={750}>

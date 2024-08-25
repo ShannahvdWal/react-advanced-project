@@ -67,20 +67,6 @@ select {
   background: rgb(230, 230, 230);
 }
 
-.checkbox {
-  padding-right: 0.5em;
-  margin-right: 0.5em;
-  margin-top: 0.8em;
-}
-
-.titles {
-  width: 300px;
-}
-
-.start-time {
-  padding-top: 1.6em;
-}
-
 .authors {
   padding-left: 0.9em;
 }
