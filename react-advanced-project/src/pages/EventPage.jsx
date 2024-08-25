@@ -8,6 +8,7 @@ import {
   Heading,
   Tag,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
@@ -28,14 +29,40 @@ export const loader = async ({ params }) => {
 export const EventPage = () => {
   const { event, categories, users } = useLoaderData();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
-  const deleteEvent = async () => {
-    // No error handling, normally you would do that.
-    const response = await fetch(`http://localhost:3000/events/${event.id}`, {
-      method: "DELETE",
-    });
-    // useNavigate("/");
-  };
+  const handleDeleteEvent = async (e) => {
+    const deleteEvent = async () => {
+        const response = await fetch(`http://localhost:3000/events/${event.id}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          throw new Error(`Failed to edit event, status: ${response.status}`);
+        }
+        return response.json();
+        };
+
+        try {
+          await toast.promise(deleteEvent(), {
+            loading: { title: "Deleting...", description: "Please wait" },
+            success: {
+              title: "Event succesfully deleted",
+              description: "Event deleted",
+              isClosable: true,
+              duration: 4000,
+            },
+            error: {
+              title: "Failed to delete event",
+              description: "Something wrong",
+            },
+          });
+          const id = (await deleteEvent()).id;
+          useNavigate(`/event/${id}`);
+        } catch (error) {
+          console.error("Error during editing event:", error);
+        }
+  }
+    
 
   return (
     <div className="event-page">
@@ -92,7 +119,7 @@ export const EventPage = () => {
                     users={users}
                   />
                 </Button>
-                <Button onClick={deleteEvent} className="delete" colorScheme="red">
+                <Button onClick={handleDeleteEvent} className="delete" colorScheme="red">
                   <DeleteIcon />
                 </Button>
               </div>

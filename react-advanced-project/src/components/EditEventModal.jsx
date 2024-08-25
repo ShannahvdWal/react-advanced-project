@@ -5,50 +5,31 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Editable,
-  EditableInput,
-  EditablePreview,
-  Flex,
-  useEditableControls,
-  Grid,
-  GridItem,
-  IconButton,
   Input,
   InputGroup,
   InputLeftAddon,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 
 const EditEventModal = ({ isOpen, onClose, event }) => {
-  // const [events, setEvents] = useState([]);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
   const [categoryIds, setCategoryIds] = useState([]);
-  const [createdBy, setCreatedBy] = useState();
+  const [createdBy, setCreatedBy] = useState([]);
+  const toast = useToast()
 
-  const updateEvent = async (e) => {
-    // No error handling, normally you would do that.
-    const response = await fetch(`http://localhost:3000/events/${event.id}`, {
-      method: "PATCH",
-      body: JSON.stringify(e),
-      headers: { "Content-Type": "application/json" },
-    });
-    // event.id = (await response.json()).id;
-    // useNavigate(`/events/${id}`)
-  };
-
-  const handleSubmit = async (e) => {
+  const handleUpdateEvent = async (e) => {
     e.preventDefault();
     
-    updateEvent({
+    const updatedEventData = {
       title,
       description,
       image,
@@ -56,8 +37,49 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
       endTime,
       categoryIds,
       createdBy,
-    });
-  };
+    };
+
+    // Empty the form fields.
+    setTitle("");
+    setDescription("");
+    setImage("");
+    setStartTime("");
+    setEndTime("");
+    setCategoryIds("");
+    setCreatedBy("");
+
+    const updateEvent = async () => {
+      const response = await fetch(`http://localhost:3000/events/${event.id}`, {
+        method: "PATCH",
+        body: JSON.stringify(updatedEventData),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to edit event. Status: ${response.status}`);
+      }
+      return response.json();
+      };
+
+      try {
+        await toast.promise(updateEvent(), {
+          loading: { title: "Editing event...", description: "Please wait" },
+          success: {
+            title: "Event updated",
+            description: "Looks great",
+            isClosable: true,
+            duration: 4000,
+          },
+          error: {
+            title: "Failed to edit event",
+            description: "Something went wrong",
+          },
+        });
+        const id = (await updateEvent()).id;
+        useNavigate(`/event/${id}`);
+      } catch (error) {
+        console.error("Encountered error while editing event:", error);
+      }
+    };
 
   const handleChangeCategories = (e) => {
     const categoryIds = [...e.target.selectedOptions].map(
@@ -67,7 +89,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   };
 
   const handleChangeAuthors = (e) => {
-    const createdBy = [...e.target.selectedOptions].push(
+    const createdBy = [...e.target.selectedOptions].map(
       (option) => +option.value
     );
     setCreatedBy(createdBy);
@@ -80,7 +102,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
         <ModalHeader>Edit: {event.title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Form onSubmit={handleSubmit}>
+          <Form onSubmit={handleUpdateEvent}>
           <Stack spacing={3}>
           <InputGroup size="sm">
             <InputLeftAddon w={125}>
@@ -154,6 +176,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
               <b>Author</b>
             </InputLeftAddon>
               <select className="authors" onChange={handleChangeAuthors}>
+                <option>- select author -</option>
                 <option value={1}>Ignacio Doe</option>
                 <option value={2}>Jane Bennett</option>
               </select>

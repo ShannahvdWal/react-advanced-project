@@ -6,8 +6,9 @@ import {
   InputGroup,
   InputLeftAddon,
   Stack,
+  useToast,
 } from "@chakra-ui/react";
-import { Form, useLoaderData } from "react-router-dom";
+import { Form } from "react-router-dom";
 
 export const loader = async ({ params }) => {
   const events = await fetch("http://localhost:3000/events");
@@ -22,7 +23,6 @@ export const loader = async ({ params }) => {
 };
 
 export const AddEventPage = () => {
-  const [events, setEvents] = useState([]);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [image, setImage] = useState();
@@ -30,22 +30,12 @@ export const AddEventPage = () => {
   const [endTime, setEndTime] = useState();
   const [categoryIds, setCategoryIds] = useState([]);
   const [createdBy, setCreatedBy] = useState();
+  const toast = useToast()
 
-  const createEvent = async (event) => {
-    // No error handling, normally you would do that.
-    const response = await fetch("http://localhost:3000/events", {
-      method: "POST",
-      body: JSON.stringify(event),
-      headers: { "Content-Type": "application/json;charset=utf-8" },
-    });
-    event.id = (await response.json()).id;
-    setEvents(events.concat(event));
-  };
+  const handleCreateEvent = async (e) => { 
+    e.preventDefault();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    createEvent({
+    const createEventData = {
       title,
       description,
       image,
@@ -53,8 +43,8 @@ export const AddEventPage = () => {
       endTime,
       categoryIds,
       createdBy,
-    });
-
+    };
+      
     // Empty the form fields.
     setTitle("");
     setDescription("");
@@ -63,14 +53,46 @@ export const AddEventPage = () => {
     setEndTime("");
     setCategoryIds("");
     setCreatedBy("");
-  };
+    
+    const createEvent = async () => {
+      const response = await fetch("http://localhost:3000/events", {
+        method: "POST",
+        body: JSON.stringify(createEventData),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to create event. Status: ${response.status}`);
+      }
+      return response.json();
+      };
 
-  const handleChangeCategories = (e) => {
-    const categoryIds = [...e.target.selectedOptions].map(
-      (option) => +option.value
-    );
-    setCategoryIds(categoryIds);
-  };
+      try {
+        await toast.promise(createEvent(), {
+          loading: { title: "Creating event...", description: "Please wait" },
+          success: {
+            title: "Event created",
+            description: "Looks great",
+            isClosable: true,
+            duration: 4000,
+          },
+          error: {
+            title: "Failed to create event",
+            description: "Something went wrong",
+          },
+        });
+        // (await createEvent()).id;
+        useNavigate(`/`);
+      } catch (error) {
+        console.error("Encountered error while creating event:", error);
+      }
+    };
+
+    const handleChangeCategories = (e) => {
+      const categoryIds = [...e.target.selectedOptions].map(
+        (option) => +option.value
+      );
+      setCategoryIds(categoryIds);
+    };
 
   const handleChangeAuthors = (e) => {
     const createdBy = [...e.target.selectedOptions].map(
@@ -78,11 +100,12 @@ export const AddEventPage = () => {
     );
     setCreatedBy(createdBy);
   };
+  
 
   return ( 
     <div className="add-event">
       <Heading className="heading-large">Add New Event</Heading>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleCreateEvent}>
         <Stack spacing={4} maxW={650}>
           <InputGroup>
             <InputLeftAddon w={125}>
@@ -165,13 +188,14 @@ export const AddEventPage = () => {
               <b>Author</b>
             </InputLeftAddon>
               <select className="authors" onChange={handleChangeAuthors}>
+                <option>- select author -</option>
                 <option value={1}>Ignacio Doe</option>
                 <option value={2}>Jane Bennett</option>
               </select>
           </InputGroup>
           
         </Stack>
-        <Button type="submit" marginTop={30}>
+        <Button colorScheme="blue" type="submit" marginTop={30}>
           Add event
         </Button>
       </Form>
