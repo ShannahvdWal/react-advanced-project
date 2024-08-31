@@ -108,8 +108,8 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   <b>Title</b>
                 </InputLeftAddon>
                 <Input
-                  placeholder={event.title}
                   onChange={(e) => setTitle(e.target.value)}
+                  defaultValue={event.title}
                   value={title}
                 />
               </InputGroup>
@@ -118,8 +118,9 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   <b>Description</b>
                 </InputLeftAddon>
                 <Input
-                  placeholder={event.description}
+                  // placeholder={event.description}
                   onChange={(e) => setDescription(e.target.value)}
+                  defaultValue={event.description}
                   value={description}
                 />
               </InputGroup>
@@ -129,8 +130,8 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                 </InputLeftAddon>
                 <Input
                   type="url"
-                  placeholder={event.image}
                   onChange={(e) => setImage(e.target.value)}
+                  defaultValue={event.image}
                   value={image}
                 />
               </InputGroup>
@@ -166,7 +167,11 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                 <InputLeftAddon w={125}>
                   <b>Categories*</b>
                 </InputLeftAddon>
-                <select required onChange={handleChangeCategories} multiple>
+                <select
+                  defaultValue={event.categoryIds}
+                  onChange={handleChangeCategories}
+                  multiple
+                >
                   <option value={1}>sports</option>
                   <option value={2}>games</option>
                   <option value={3}>relaxation</option>
@@ -176,8 +181,11 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                 <InputLeftAddon w={125}>
                   <b>Author</b>
                 </InputLeftAddon>
-                <select className="authors" onChange={handleChangeAuthors}>
-                  <option>- select author -</option>
+                <select
+                  defaultValue={event.createdBy}
+                  className="authors"
+                  onChange={handleChangeAuthors}
+                >
                   <option value={1}>Ignacio Doe</option>
                   <option value={2}>Jane Bennett</option>
                 </select>
