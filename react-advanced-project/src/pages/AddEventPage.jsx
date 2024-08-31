@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {
   Button,
+  Box,
+  Center,
   Heading,
   Input,
   InputGroup,
@@ -67,7 +69,7 @@ export const AddEventPage = () => {
     };
 
     try {
-      await toast.promise(createEvent(), {
+      toast.promise(createEvent(), {
         loading: { title: "Creating event...", description: "Please wait" },
         success: {
           title: "Event created",
@@ -102,102 +104,106 @@ export const AddEventPage = () => {
 
   return (
     <div className="add-event">
-      <Heading className="heading-large">Add New Event</Heading>
-      <Form onSubmit={handleCreateEvent}>
-        <Stack spacing={4} maxW={650}>
-          <InputGroup>
-            <InputLeftAddon w={125}>
-              <b>Title</b>
-            </InputLeftAddon>
-            <Input
-              type="text"
-              minlength="3"
-              maxlength="25"
-              placeholder="event name"
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
-              required
-            />
-          </InputGroup>
-          <InputGroup>
-            <InputLeftAddon w={125}>
-              <b>Description</b>
-            </InputLeftAddon>
-            <Input
-              type="text"
-              minlength="8"
-              maxlength="75"
-              placeholder="brief event description"
-              onChange={(e) => setDescription(e.target.value)}
-              value={description}
-              required
-            />
-          </InputGroup>
-          <InputGroup size="sm">
-            <InputLeftAddon w={125}>
-              <b>Image</b>
-            </InputLeftAddon>
-            <Input
-              type="url"
-              placeholder="https://"
-              onChange={(e) => setImage(e.target.value)}
-              value={image}
-              required
-            />
-          </InputGroup>
-          <InputGroup size="sm">
-            <InputLeftAddon w={125}>
-              <b>Event Start</b>
-            </InputLeftAddon>
-            <Input
-              htmlSize={4}
-              width="auto"
-              type="datetime-local"
-              marginRight={10}
-              onChange={(e) => setStartTime(e.target.value)}
-              value={startTime}
-              required
-            ></Input>
-            <InputLeftAddon w={125}>
-              <b>Event End</b>
-            </InputLeftAddon>
-            <Input
-              htmlSize={4}
-              width="auto"
-              type="datetime-local"
-              onChange={(e) => setEndTime(e.target.value)}
-              value={endTime}
-              required
-            ></Input>
-          </InputGroup>
-          <div className="asterix">
-            <i>*Hold CTRL/ CMD to select multiple categories</i>{" "}
-          </div>
-          <InputGroup size="sm">
-            <InputLeftAddon w={125}>
-              <b>Categories*</b>
-            </InputLeftAddon>
-            <select required onChange={handleChangeCategories} multiple>
-              <option value={1}>sports</option>
-              <option value={2}>games</option>
-              <option value={3}>relaxation</option>
-            </select>
-          </InputGroup>
-          <InputGroup size="sm">
-            <InputLeftAddon w={125}>
-              <b>Author</b>
-            </InputLeftAddon>
-            <select className="authors" onChange={handleChangeAuthors}>
-              <option>- select author -</option>
-              <option value={1}>Ignacio Doe</option>
-              <option value={2}>Jane Bennett</option>
-            </select>
-          </InputGroup>
-        </Stack>
-        <Button colorScheme="blue" type="submit" marginTop={30}>
-          Add event
-        </Button>
-      </Form>
+      <Center>
+        <Box>
+          <Heading className="heading-large">Add New Event</Heading>
+          <Form onSubmit={handleCreateEvent}>
+            <Stack spacing={4} maxW={650}>
+              <InputGroup>
+                <InputLeftAddon w={125}>
+                  <b>Title</b>
+                </InputLeftAddon>
+                <Input
+                  type="text"
+                  minlength="3"
+                  maxlength="25"
+                  placeholder="event name"
+                  onChange={(e) => setTitle(e.target.value)}
+                  value={title}
+                  required
+                />
+              </InputGroup>
+              <InputGroup>
+                <InputLeftAddon w={125}>
+                  <b>Description</b>
+                </InputLeftAddon>
+                <Input
+                  type="text"
+                  minlength="8"
+                  maxlength="75"
+                  placeholder="brief event description"
+                  onChange={(e) => setDescription(e.target.value)}
+                  value={description}
+                  required
+                />
+              </InputGroup>
+              <InputGroup size="sm">
+                <InputLeftAddon w={125}>
+                  <b>Image</b>
+                </InputLeftAddon>
+                <Input
+                  type="url"
+                  placeholder="https://"
+                  onChange={(e) => setImage(e.target.value)}
+                  value={image}
+                  required
+                />
+              </InputGroup>
+              <InputGroup size="sm">
+                <InputLeftAddon w={125}>
+                  <b>Event Start</b>
+                </InputLeftAddon>
+                <Input
+                  htmlSize={4}
+                  width="auto"
+                  type="datetime-local"
+                  marginRight={10}
+                  onChange={(e) => setStartTime(e.target.value)}
+                  value={startTime}
+                  required
+                ></Input>
+                <InputLeftAddon w={125}>
+                  <b>Event End</b>
+                </InputLeftAddon>
+                <Input
+                  htmlSize={4}
+                  width="auto"
+                  type="datetime-local"
+                  onChange={(e) => setEndTime(e.target.value)}
+                  value={endTime}
+                  required
+                ></Input>
+              </InputGroup>
+              <div className="asterix">
+                <i>*Hold CTRL/ CMD to select multiple categories</i>{" "}
+              </div>
+              <InputGroup size="sm">
+                <InputLeftAddon w={125}>
+                  <b>Categories*</b>
+                </InputLeftAddon>
+                <select required onChange={handleChangeCategories} multiple>
+                  <option value={1}>sports</option>
+                  <option value={2}>games</option>
+                  <option value={3}>relaxation</option>
+                </select>
+              </InputGroup>
+              <InputGroup size="sm">
+                <InputLeftAddon w={125}>
+                  <b>Author</b>
+                </InputLeftAddon>
+                <select className="authors" onChange={handleChangeAuthors}>
+                  <option>- select author -</option>
+                  <option value={1}>Ignacio Doe</option>
+                  <option value={2}>Jane Bennett</option>
+                </select>
+              </InputGroup>
+            </Stack>
+            <Button colorScheme="blue" type="submit" marginTop={30}>
+              Add event
+            </Button>
+          </Form>
+        </Box>
+      </Center>
     </div>
   );
 };
