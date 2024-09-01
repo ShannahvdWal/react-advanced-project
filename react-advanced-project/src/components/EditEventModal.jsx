@@ -26,6 +26,9 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
   const toast = useToast();
   const navigate = useNavigate();
 
+  const reformattedStartTime = event.startTime.replace("Z", "");
+  const reformattedEndTime = event.endTime.replace("Z", "");
+
   const handleUpdateEvent = async (e) => {
     e.preventDefault();
 
@@ -118,7 +121,6 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   <b>Description</b>
                 </InputLeftAddon>
                 <Input
-                  // placeholder={event.description}
                   onChange={(e) => setDescription(e.target.value)}
                   defaultValue={event.description}
                   value={description}
@@ -145,6 +147,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   type="datetime-local"
                   marginRight={10}
                   onChange={(e) => setStartTime(e.target.value)}
+                  defaultValue={reformattedStartTime}
                   value={startTime}
                 ></Input>
               </InputGroup>
@@ -157,6 +160,7 @@ const EditEventModal = ({ isOpen, onClose, event }) => {
                   width="auto"
                   type="datetime-local"
                   onChange={(e) => setEndTime(e.target.value)}
+                  defaultValue={reformattedEndTime}
                   value={endTime}
                 ></Input>
               </InputGroup>
