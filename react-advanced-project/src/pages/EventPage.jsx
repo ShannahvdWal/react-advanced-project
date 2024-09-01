@@ -44,6 +44,21 @@ export const EventPage = () => {
     navigate("/");
   };
 
+  const reformattedStartTime = new Date(event.startTime).toLocaleString([], {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  const reformattedEndTime = new Date(event.endTime).toLocaleString([], {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   return (
     <div className="event-page">
       <Card margin className="event-page-card" maxW={625}>
@@ -59,10 +74,10 @@ export const EventPage = () => {
                 <p>{event.description}</p>
                 <p className="event-times">
                   <b>Start: </b>
-                  {event.startTime}
+                  {reformattedStartTime}
                 </p>
                 <p>
-                  <b>End: </b> {event.endTime}
+                  <b>End: </b> {reformattedEndTime}
                 </p>
                 <p>
                   <b>Categories: </b>
