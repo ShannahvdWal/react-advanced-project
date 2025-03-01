@@ -37,6 +37,26 @@ export const EventsPage = () => {
   const [chosenCategory, setChosenCategory] = useState(0);
   const [query, setQuery] = useState("");
 
+  function reformattedStartTime(p) {
+    return new Date(p).toLocaleString([], {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  function reformattedEndTime(p) {
+    return new Date(p).toLocaleString([], {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
   return (
     <div className="event-list">
       <Heading className="heading-large">
@@ -106,10 +126,11 @@ export const EventsPage = () => {
                         <img src={event.image}></img>
                         <p>
                           <b>Start: </b>
-                          {event.startTime}
+                          {reformattedStartTime(event.startTime)}
                         </p>
                         <p>
-                          <b>End: </b> {event.endTime}
+                          <b>End: </b>
+                          {reformattedEndTime(event.endTime)}
                         </p>
                         <p>
                           <b>Categories: </b>
