@@ -13,7 +13,6 @@ import {
   Card,
   CardBody,
   Tag,
-  Image,
   Stack,
 } from "@chakra-ui/react";
 import { Link, useLoaderData } from "react-router-dom";
@@ -79,11 +78,7 @@ export const EventsPage = () => {
           onChange={setChosenCategory}
         >
           <Stack direction={{ base: "column", sm: "row" }} columnGap="10px">
-            <Image
-              marginRight={5}
-              width={5}
-              src="src/Assets/filter-solid.svg"
-            />
+            <Heading size="md">Show:</Heading>
             <Radio marginEnd={2} size="lg" value="0">
               All
             </Radio>
